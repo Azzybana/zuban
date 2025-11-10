@@ -550,25 +550,18 @@ impl<F: VfsFile> Vfs<F> {
             {
                 // I'm not sure if this also affects Mac, but on Windows the paths are reported
                 // depending on how the watch was created.
-                if workspace.canonicalized_path != workspace.root_path {
-                    if let Ok(after) = path.as_ref().strip_prefix(&**workspace.canonicalized_path) {
-                        if let Some(after) = after.to_str() {
-                            let new = format!(
-                                "{}{}{after}",
-                                workspace.root_path,
-                                self.handler.separator()
-                            );
-                            let normalized =
-                                NormalizedPath::new_arc(self.handler.unchecked_abs_path(&new));
-                            let non_canonicalized_path =
-                                PathWithScheme::with_file_scheme(normalized);
-                            if self.in_memory_files.contains_key(&non_canonicalized_path) {
-                                tracing::debug!(
-                                    "Ignored invalidation, because the file is in-memory (via canonicalized path)"
-                                );
-                                return InvalidationResult::InvalidatedFiles;
-                            }
-                        }
+                if workspace.canonicalized_path != workspace.root_path
+                    && let Ok(after) = path.as_ref().strip_prefix(&**workspace.canonicalized_path)
+                    && let Some(after) = after.to_str()
+                {
+                    let new = format!("{}{}{after}", workspace.root_path, self.handler.separator());
+                    let normalized = NormalizedPath::new_arc(self.handler.unchecked_abs_path(&new));
+                    let non_canonicalized_path = PathWithScheme::with_file_scheme(normalized);
+                    if self.in_memory_files.contains_key(&non_canonicalized_path) {
+                        tracing::debug!(
+                            "Ignored invalidation, because the file is in-memory (via canonicalized path)"
+                        );
+                        return InvalidationResult::InvalidatedFiles;
                     }
                 }
             }
