@@ -26,15 +26,21 @@ tracing.workspace = true
 lsp-types.workspace = true
 rayon.workspace = true
 which = "*"
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
 
 [dev-dependencies]
 clap.workspace = true
 test_utils.workspace = true
 logging_config.workspace = true
 shlex = "*"
+mimalloc = "*"
+jemallocator = "*"
 
 [features]
 zuban_debug = []
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]
 
 [[test]]
 name = "blackbox"

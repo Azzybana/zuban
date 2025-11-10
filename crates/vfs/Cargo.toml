@@ -19,3 +19,9 @@ crossbeam-channel.workspace = true
 notify.workspace = true
 glob = "*"
 same-file = "*"
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
+
+[features]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]

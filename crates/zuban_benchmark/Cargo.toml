@@ -10,6 +10,10 @@ authors.workspace = true
 [lints]
 workspace = true
 
+[dependencies]
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
+
 [dev-dependencies]
 criterion = "*"
 utils.workspace = true
@@ -18,6 +22,10 @@ zuban_python.workspace = true
 config.workspace = true
 vfs.workspace = true
 test_utils.workspace = true
+
+[features]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]
 
 [[bench]]
 name = "parsa_python"

@@ -20,6 +20,8 @@ anyhow.workspace = true
 clap.workspace = true
 colored.workspace = true
 tracing.workspace = true
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
 
 [dev-dependencies]
 test_utils.workspace = true
@@ -27,3 +29,5 @@ logging_config.workspace = true
 
 [features]
 zuban_debug = ["zuban_python/zuban_debug"]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]

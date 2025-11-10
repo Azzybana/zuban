@@ -14,6 +14,12 @@ workspace = true
 parsa.workspace = true
 lazy_static.workspace = true
 regex.workspace = true
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
+
+[features]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]
 
 [dev-dependencies]
 insta.workspace = true

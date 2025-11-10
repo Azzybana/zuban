@@ -18,6 +18,10 @@ zubanls.workspace = true
 anyhow.workspace = true
 clap.workspace = true
 tracing.workspace = true
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
 
 [features]
 zuban_debug = ["zmypy/zuban_debug", "zubanls/zuban_debug"]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]

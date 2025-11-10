@@ -19,3 +19,9 @@ serde.workspace = true
 serde_json.workspace = true
 
 ed25519-dalek = "*"
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
+
+[features]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]

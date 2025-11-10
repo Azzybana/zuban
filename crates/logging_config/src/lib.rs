@@ -2,6 +2,20 @@
 //! filter syntax and `tracing_appender` for non blocking output.
 //! This was initially copied from rust-analyzer's crate `rust-analyzer/tracing`.
 
+#[cfg(feature = "mimalloc")]
+use mimalloc::MiMalloc;
+
+#[cfg(feature = "mimalloc")]
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
+
+#[cfg(feature = "jemalloc")]
+use jemallocator::Jemalloc;
+
+#[cfg(feature = "jemalloc")]
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
+
 mod hprof;
 
 use std::{env, fs, path::PathBuf, sync::Once};

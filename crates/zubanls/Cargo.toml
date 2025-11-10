@@ -33,9 +33,13 @@ shellexpand.workspace = true
 serial_test = "*"
 fluent-uri = "0.1.4"
 urlencoding = "*"
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
 
 [dev-dependencies]
 test_utils.workspace = true
 
 [features]
 zuban_debug = ["zuban_python/zuban_debug"]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]

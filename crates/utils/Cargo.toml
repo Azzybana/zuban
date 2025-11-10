@@ -13,3 +13,9 @@ workspace = true
 [dependencies]
 fnv.workspace = true
 dirs.workspace = true
+mimalloc = { version = "*", optional = true }
+jemallocator = { version = "*", optional = true }
+
+[features]
+mimalloc = ["dep:mimalloc"]
+jemalloc = ["dep:jemallocator"]
