@@ -773,7 +773,7 @@ mod tests {
         );
         let d = |cli_args: &[&str]| diagnostics(Cli::parse_from(cli_args), test_dir.path());
         let expect_not_found = |cli_args: &[&str]| {
-            expect_diagnostics_error(Cli::parse_from(cli_args), test_dir.path().into())
+            expect_diagnostics_error(Cli::parse_from(cli_args), test_dir.path())
         };
 
         let err1 = format!(
