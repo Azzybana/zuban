@@ -27,6 +27,8 @@ lsp-types.workspace = true
 rayon.workspace = true
 which = "*"
 mimalloc = { version = "*", optional = true }
+
+[target.'cfg(target_env = "gnu")'.dependencies]
 jemallocator = { version = "*", optional = true }
 
 [dev-dependencies]
@@ -35,6 +37,8 @@ test_utils.workspace = true
 logging_config.workspace = true
 shlex = "*"
 mimalloc = "*"
+
+[target.'cfg(target_env = "gnu")'.dev-dependencies]
 jemallocator = "*"
 
 [features]

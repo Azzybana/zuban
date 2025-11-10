@@ -1,5 +1,11 @@
 // Some parts are copied from rust-analyzer
 
+#[cfg(all(feature = "mimalloc", feature = "jemalloc"))]
+compile_error!("Cannot enable both mimalloc and jemalloc features at the same time");
+
+#[cfg(all(not(target_env = "gnu"), feature = "jemalloc"))]
+compile_error!("Cannot enable jemalloc without a gnu toolchain at this time");
+
 #[cfg(feature = "mimalloc")]
 use mimalloc::MiMalloc;
 

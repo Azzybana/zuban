@@ -1,6 +1,12 @@
 #![allow(clippy::nonminimal_bool)] // I don't like this rule
 #![allow(clippy::too_many_arguments)] // TODO For now this is easier, but probably enable again
 
+#[cfg(all(feature = "mimalloc", feature = "jemalloc"))]
+compile_error!("Cannot enable both mimalloc and jemalloc features at the same time");
+
+#[cfg(all(not(target_env = "gnu"), feature = "jemalloc"))]
+compile_error!("Cannot enable jemalloc without a gnu toolchain at this time");
+
 #[cfg(feature = "mimalloc")]
 use mimalloc::MiMalloc;
 

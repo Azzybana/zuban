@@ -20,6 +20,8 @@ serde_json.workspace = true
 
 ed25519-dalek = "*"
 mimalloc = { version = "*", optional = true }
+
+[target.'cfg(target_env = "gnu")'.dependencies]
 jemallocator = { version = "*", optional = true }
 
 [features]

@@ -12,6 +12,8 @@ workspace = true
 
 [dependencies]
 mimalloc = { version = "*", optional = true }
+
+[target.'cfg(target_env = "gnu")'.dependencies]
 jemallocator = { version = "*", optional = true }
 
 [dev-dependencies]

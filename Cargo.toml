@@ -72,7 +72,8 @@ cargo-features = ["profile-rustflags"]
     debug = 1
 
 [profile.local]
-    # Removes all the things release doesn't explicitly need, and tunes locally
+    # Removes all the things release doesn't explicitly need, and tunes locally.
+    # Compile time is extended greatly. Tune thresholds to your system.
     inherits = "release"
     opt-level = 3
     codegen-units = 1

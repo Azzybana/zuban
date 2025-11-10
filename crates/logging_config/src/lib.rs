@@ -2,6 +2,12 @@
 //! filter syntax and `tracing_appender` for non blocking output.
 //! This was initially copied from rust-analyzer's crate `rust-analyzer/tracing`.
 
+#[cfg(all(feature = "mimalloc", feature = "jemalloc"))]
+compile_error!("Cannot enable both mimalloc and jemalloc features at the same time");
+
+#[cfg(all(not(target_env = "gnu"), feature = "jemalloc"))]
+compile_error!("Cannot enable jemalloc without a gnu toolchain at this time");
+
 #[cfg(feature = "mimalloc")]
 use mimalloc::MiMalloc;
 

@@ -17,6 +17,8 @@ test_utils.workspace = true
 clap.workspace = true
 logging_config.workspace = true
 mimalloc = { version = "*", optional = true }
+
+[target.'cfg(target_env = "gnu")'.dependencies]
 jemallocator = { version = "*", optional = true }
 
 [features]
