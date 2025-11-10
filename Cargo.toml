@@ -84,8 +84,6 @@ cargo-features = ["profile-rustflags"]
         "-C",
         "target-cpu=native",
         "-C",
-        "tune-cpu=native",
-        "-C",
         "embed-bitcode=true",
         "-C",
         "llvm-args=-unroll-threshold=8192",
