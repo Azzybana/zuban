@@ -154,8 +154,7 @@ pub(crate) fn find_and_check_ide_tests(
                         line,
                         column: iterator
                             .clone()
-                            .skip(cli.add_lines.unwrap_or_default())
-                            .next()
+                            .nth(cli.add_lines.unwrap_or_default())
                             .expect("Expect a line after #?")
                             .1
                             .trim_end_matches('\r')
