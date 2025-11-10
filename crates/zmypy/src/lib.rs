@@ -1111,7 +1111,7 @@ mod tests {
             ("MYPYPATH", format!("{}:{}", pth("pkg1"), pth("pkg2"))),
         ] {
             let d = |file: &str| {
-                diagnostics_with_env_lookup(Cli::parse_from(&["", file]), test_dir.path(), |s| {
+                diagnostics_with_env_lookup(Cli::parse_from(["", file]), test_dir.path(), |s| {
                     match s {
                         _ if s == var => Ok(value.clone()),
                         _ => Err(VarError::NotPresent),
