@@ -1,69 +1,96 @@
 [workspace]
 
-resolver = "2"
-members = ["crates/*"]
+    resolver = "2"
+    members = ["crates/*"]
 
 [workspace.package]
-version = "0.2.2"
-edition = "2024"
-rust-version = "1.89"
-homepage = "https://zubanls.com"
-authors = ["Dave Halter <info@zubanls.com>"]
+    version = "0.2.2"
+    edition = "2024"
+    rust-version = "1.89"
+    homepage = "https://zubanls.com"
+    authors = ["Dave Halter <info@zubanls.com>"]
 
 [workspace.dependencies]
-# Internal crates
-config = { path = "./crates/config" }
-licensing = { path = "./crates/licensing" }
-logging_config = { path = "./crates/logging_config" }
-parsa = { path = "./crates/parsa" }
-parsa_python = { path = "./crates/parsa_python" }
-parsa_python_cst = { path = "./crates/parsa_python_cst" }
-test_utils = { path = "./crates/test_utils" }
-utils = { path = "./crates/utils" }
-vfs = { path = "./crates/vfs" }
-zmypy = { path = "./crates/zmypy" }
-zuban_python = { path = "./crates/zuban_python" }
-zubanls = { path = "./crates/zubanls" }
+    # Internal crates
+    config = { path = "./crates/config" }
+    licensing = { path = "./crates/licensing" }
+    logging_config = { path = "./crates/logging_config" }
+    parsa = { path = "./crates/parsa" }
+    parsa_python = { path = "./crates/parsa_python" }
+    parsa_python_cst = { path = "./crates/parsa_python_cst" }
+    test_utils = { path = "./crates/test_utils" }
+    utils = { path = "./crates/utils" }
+    vfs = { path = "./crates/vfs" }
+    zmypy = { path = "./crates/zmypy" }
+    zuban_python = { path = "./crates/zuban_python" }
+    zubanls = { path = "./crates/zubanls" }
 
-# General third party dependencies
-anyhow = "*"
-clap = { version = "*", features = ["derive"] }
-colored = { version = "*" }
-crossbeam-channel = "*"
-dirs = "*"
-fnv = "*"
-lazy_static = "*"
-lsp-types = { version = "0.97.0", features = ["proposed"]}
-notify = "*"
-num-bigint = "*"
-num-traits = "*"
-rayon = "*"
-regex = "*"
-serde = { version = "*", features = ["derive"] }
-serde_json = "*"
-shellexpand = "*"
-toml_edit = "*"
-tracing = "*"
-tracing-subscriber = { version = "*", features = ["time", "local-time"] }
-tracing-appender = "*"
+    # General third party dependencies
+    anyhow = "*"
+    clap = { version = "*", features = ["derive"] }
+    colored = { version = "*" }
+    crossbeam-channel = "*"
+    dirs = "*"
+    fnv = "*"
+    lazy_static = "*"
+    lsp-types = { version = "0.97.0", features = [
+        "proposed"
+    ] }
+    notify = "*"
+    num-bigint = "*"
+    num-traits = "*"
+    rayon = "*"
+    regex = "*"
+    serde = { version = "*", features = ["derive"] }
+    serde_json = "*"
+    shellexpand = "*"
+    toml_edit = "*"
+    tracing = "*"
+    tracing-subscriber = { version = "*", features = [
+        "time",
+        "local-time"
+    ] }
+    tracing-appender = "*"
 
-# Dev dependencies
-insta = "*"
+    # Dev dependencies
+    insta = "*"
 
 [workspace.metadata.release]
-pre-release-hook = [
-    "sed",
-    "-i",
-    "s/^version = .*$/version = \"{{version}}\"/",
-    # It seems like this is being run for every Cargo.toml
-    "../../deploy/pypi/zuban/pyproject.toml",
-]
+    pre-release-hook = [
+        "sed",
+        "-i",
+        "s/^version = .*$/version = \"{{version}}\"/",
+        # It seems like this is being run for every Cargo.toml
+        "../../deploy/pypi/zuban/pyproject.toml"
+    ]
 
 [profile.release]
-# Had debug = "line-tables-only" here, which is probably enough, but struggled
-# with test unwinding which has works on debug = <any number>. Use this for now
-debug = 1
+    # Had debug = "line-tables-only" here, which is probably enough, but struggled
+    # with test unwinding which has works on debug = <any number>. Use this for now
+    debug = 1
+
+[profile.local]
+    # Removes all the things release doesn't explicitly need, and tunes locally
+    inherits = "release"
+    opt-level = 3
+    codegen-units = 1
+    lto = "fat"
+    debug = false
+    panic = "abort"
+    strip = "symbols"
+    rustflags = [
+        "-C",
+        "target-cpu=native",
+        "-C",
+        "tune-cpu=native",
+        "-C",
+        "embed-bitcode=true",
+        "-C",
+        "llvm-args=-unroll-threshold=8192",
+        "-C",
+        "llvm-args=-inline-threshold=8192"
+    ]
 
 [workspace.lints.rust]
-explicit_outlives_requirements = "warn"
-unused_extern_crates = "warn"
+    explicit_outlives_requirements = "warn"
+    unused_extern_crates = "warn"
