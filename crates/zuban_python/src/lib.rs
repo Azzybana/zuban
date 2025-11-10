@@ -121,12 +121,18 @@ impl Project {
 
     pub fn workspace_documents(&self) -> impl ParallelIterator<Item = Document<'_>> {
         let (known_file_indexes, files_to_be_loaded) = all_typechecked_files(&self.db);
+        // Convert tuples to just the entries to avoid allocator type parameter issues
+        let entries: Vec<_> = files_to_be_loaded
+            .into_iter()
+            .map(|(entry, _)| entry)
+            .collect();
+
         known_file_indexes
             .into_par_iter()
             .chain(
-                files_to_be_loaded
+                entries
                     .into_par_iter()
-                    .filter_map(|(entry, _)| self.db.load_file_from_workspace(&entry, false)),
+                    .filter_map(|entry| self.db.load_file_from_workspace(&entry, false)),
             )
             .map(|file_index| Document {
                 project: self,
